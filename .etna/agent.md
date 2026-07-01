@@ -5,7 +5,7 @@ It is this agent's behavioral **contract**: what it's for, who it serves, what's
 in and out of scope, plus a log of every change Etna has applied — so the whole
 footprint is visible and auditable in your own repo.
 
-_Generated 2026-06-29T14:37:30.295Z. Don't edit by hand — Agent Etna rewrites it._
+_Generated 2026-07-01T10:09:35.038Z. Don't edit by hand — Agent Etna rewrites it._
 
 ## Agent
 - **Repo:** `giuerr/livia` (branch `main`)

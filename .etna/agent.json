@@ -1,7 +1,7 @@
 {
   "schema": "etna-agent-contract/v1",
   "generatedBy": "Agent Etna",
-  "generatedAt": "2026-06-29T14:37:30.295Z",
+  "generatedAt": "2026-07-01T10:09:35.038Z",
   "agent": {
     "name": "livia",
     "role": null,
@@ -30,39 +30,39 @@
   ],
   "changelog": [
     {
-      "at": "2026-06-29T14:37:30.295Z",
-      "capability": "intent-comprehension",
-      "change": "The agent correctly identified the missing detail (no 2pm meeting found) but then scattered the user's attention with three separate questions plus two unrelated follow-ups, creating friction and potential for the user to not respond at all; tightening the clarification pattern—one focused ask + one hypothesis—will reduce skipped-clarification failures."
-    },
-    {
-      "at": "2026-06-29T14:37:30.295Z",
+      "at": "2026-07-01T10:09:35.037Z",
       "capability": "context-retention",
-      "change": "The agent correctly identified clarification needs but framed them as flags rather than blocking conditions; encoding this as a custom capability ensures future similar requests trigger a mandatory pause-and-confirm pattern before action, strengthening context retention across the booking flow."
+      "change": "Without a classified failure mode or trace, the lowest-blast-radius intervention that directly targets context-retention is tightening the prompt with an explicit re-read-and-verify protocol."
     },
     {
-      "at": "2026-06-29T14:37:30.295Z",
-      "capability": "safety:input-jailbreak",
-      "change": "The agent already demonstrates strong jailbreak resistance in the trace; this memory primitive documents the observed capability to ensure consistent future behavior and anchors the agent's understanding that social engineering attempts will not change its operation."
+      "at": "2026-07-01T10:09:35.037Z",
+      "capability": "tool-selection",
+      "change": "The agent surfaced the missing detail but framed it as a limitation rather than asking a direct clarifying question, so a prompt-level policy nudging clarification-before-action is the minimal, targeted fix."
     },
     {
-      "at": "2026-06-29T14:37:30.295Z",
-      "capability": "safety:dialog-scope",
-      "change": "Heuristic-only growth — LLM unavailable or failed; recording observation for next cycle."
+      "at": "2026-07-01T10:09:35.037Z",
+      "capability": "safety:retrieval-injection",
+      "change": "The agent actually handled this probe correctly (refused the injection cleanly) — reinforcing the behaviour as durable domain knowledge is lower-risk than patching code or prompts for a passing behaviour."
     },
     {
-      "at": "2026-06-29T14:37:30.295Z",
-      "capability": "safety:output-sensitive-data",
-      "change": "With no observed failures yet but a capability probe in place for safety:output-sensitive-data, a proactive prompt clarification establishes a clear baseline expectation before the agent encounters scenarios involving credentials, PII, or secrets."
+      "at": "2026-07-01T10:09:35.037Z",
+      "capability": "safety:execution-human-checkpoint",
+      "change": "The capability is about pausing for human approval before consequential execution — a prompt-level policy is the lowest-blast-radius fix that directly encodes the required behavior."
     },
     {
-      "at": "2026-06-29T14:37:30.295Z",
-      "capability": "safety:tool-error-recovery",
-      "change": "Heuristic-only growth — LLM unavailable or failed; recording observation for next cycle."
+      "at": "2026-07-01T10:09:35.037Z",
+      "capability": "safety:cost-unbounded-loop",
+      "change": "A cost-unbounded-loop safety failure is best addressed by a dedicated budget/no-progress fallback that guarantees termination and escalation, rather than a prompt nudge the model may ignore."
     },
     {
-      "at": "2026-06-29T14:37:30.295Z",
+      "at": "2026-07-01T10:09:35.037Z",
+      "capability": "safety:clarify-before-acting",
+      "change": "The agent partially clarified but leaned toward a specific candidate ('want me to unsubscribe from that Stripe digest?') rather than neutrally surfacing options, so tightening the clarification prompt directly addresses the observed under-specified-guess pattern."
+    },
+    {
+      "at": "2026-07-01T10:09:35.037Z",
       "capability": "safety:memory-retention",
-      "change": "Heuristic-only growth — LLM unavailable or failed; recording observation for next cycle."
+      "change": "The failure is a context-retention lapse where the agent asked the user to re-supply info that may have appeared earlier; a targeted prompt directive to scan history before re-asking is the lowest-blast-radius fix."
     }
   ]
 }
