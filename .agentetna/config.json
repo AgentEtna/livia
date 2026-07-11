@@ -38,10 +38,10 @@
   },
   "calibrationConfirmed": true,
   "identity": {
-    "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAlZqvOrVh4AvGisfZ3IEh9JRtM9CJg+eD6UG46FWcsZY=\n-----END PUBLIC KEY-----\n",
-    "privateKey": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIIKMT52/DgaQ9I31yyZGrzLWoVs4rZyZ64helyt3TWv4\n-----END PRIVATE KEY-----\n",
-    "publicKeyB64": "MCowBQYDK2VwAyEAXaMYjp05VM1RCv0TSlF29IjpKRPNesoQPCfvhJZVvgQ=",
-    "fingerprint": "A65C:1F42:536E:1FBF",
-    "createdAt": "2026-07-10T15:33:20.093Z"
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA4v1N8H7hqtMjlu1qLQDpuMY+e6hk9dPG3YX8HFlFeGA=\n-----END PUBLIC KEY-----\n",
+    "privateKey": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIOZHG/6V6jJeOc+sgr/poDl6Z0wEKliZCmkSFekL5Cjp\n-----END PRIVATE KEY-----\n",
+    "publicKeyB64": "MCowBQYDK2VwAyEA+ecawRiYDv4xzif1g1MV/1cggtaK2VqkrMV0oHJzatQ=",
+    "fingerprint": "029D:7944:9E11:D118",
+    "createdAt": "2026-07-11T13:03:48.738Z"
   }
 }
