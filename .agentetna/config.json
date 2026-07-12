@@ -5,8 +5,7 @@
   "color": "#D9D9D9",
   "ownerName": "Owner",
   "channels": [
-    "web",
-    "telegram"
+    "web"
   ],
   "mode": "simulator",
   "env": {
@@ -18,9 +17,7 @@
     "repo": "giuerr/livia",
     "branch": "main",
     "files": [
-      "server.js",
-      "instructions.txt",
-      ".env.example"
+      "server.js"
     ]
   },
   "calibration": {
@@ -41,10 +38,10 @@
   },
   "calibrationConfirmed": true,
   "identity": {
-    "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA0OqIzsuUXu6ueAO6X1YxD0qZtk455nkywj6Ya+UlgUE=\n-----END PUBLIC KEY-----\n",
-    "privateKey": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIMGycCdXnKOeqTr30Ldrz8WeXd/kfjQ4Ki3DPmVM328y\n-----END PRIVATE KEY-----\n",
-    "publicKeyB64": "MCowBQYDK2VwAyEA/GNNC8+fz+2ngvC6Ot9w+3uThKXWmzTAkGqjldFtSC0=",
-    "fingerprint": "9E2A:83F8:BC63:A813",
-    "createdAt": "2026-07-12T09:06:35.511Z"
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAjgfXt+tu4bFR4LqPRskr0LnW/o1g+2C31ApDA8sERrw=\n-----END PUBLIC KEY-----\n",
+    "privateKey": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIEXY2JM7N4DqXteojrbIch0qhHWExDHs4z5MvqsnT72u\n-----END PRIVATE KEY-----\n",
+    "publicKeyB64": "MCowBQYDK2VwAyEA4Y5T2+w6q5EAZFwZmprcUBC54qjxDFoXlazRYRRdOds=",
+    "fingerprint": "C101:0DBE:4CDF:F364",
+    "createdAt": "2026-07-12T16:21:03.716Z"
   }
 }
