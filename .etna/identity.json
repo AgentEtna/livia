@@ -8,13 +8,13 @@
   },
   "publicKey": {
     "algorithm": "Ed25519",
-    "pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAjgfXt+tu4bFR4LqPRskr0LnW/o1g+2C31ApDA8sERrw=\n-----END PUBLIC KEY-----\n",
-    "base64": "MCowBQYDK2VwAyEA4Y5T2+w6q5EAZFwZmprcUBC54qjxDFoXlazRYRRdOds=",
-    "fingerprint": "C101:0DBE:4CDF:F364"
+    "pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAq4JK7VogoRXKhQWzlc9+bMhuqR56dilsoUUuifehRYE=\n-----END PUBLIC KEY-----\n",
+    "base64": "MCowBQYDK2VwAyEAQRBbdRVLHv0lXWJP5oDAONdPus1arBRg4/pfkXA1kVU=",
+    "fingerprint": "81C0:F795:19F6:DB56"
   },
   "verification": {
     "url": "https://agentsimulator.onrender.com/verify/livia",
     "badge": "https://agentsimulator.onrender.com/badge/livia"
   },
-  "issuedAt": "2026-07-12T16:21:03.717Z"
+  "issuedAt": "2026-07-25T10:36:03.446Z"
 }
