@@ -36,12 +36,5 @@
     "audience": "",
     "difficulty": "foundational"
   },
-  "calibrationConfirmed": true,
-  "identity": {
-    "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA4AUunxTjjoOmvc0zTonG7e63yFCO3eA6TEGzW95AmNA=\n-----END PUBLIC KEY-----\n",
-    "privateKey": "-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIJ2HsGJ+1a0jlLLIRvupusyasxnqHz+sW9NxcoTB2BWM\n-----END PRIVATE KEY-----\n",
-    "publicKeyB64": "MCowBQYDK2VwAyEAR9ox937Q4TTQeIakIdp7INi1co+cfFMEeA0GvVEgY2o=",
-    "fingerprint": "8E68:9D06:C262:45A9",
-    "createdAt": "2026-07-25T18:25:13.992Z"
-  }
+  "calibrationConfirmed": true
 }
