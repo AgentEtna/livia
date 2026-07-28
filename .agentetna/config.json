@@ -8,12 +8,13 @@
     "web",
     "telegram"
   ],
-  "mode": "simulator",
+  "mode": "unknown",
   "env": {
     "url": "LIVIA_URL",
     "password": "LIVIA_PASSWORD"
   },
   "userId": "github:266114454",
+  "directUrl": "https://agentetna.onrender.com",
   "github": {
     "repo": "giuerr/livia",
     "branch": "main",
