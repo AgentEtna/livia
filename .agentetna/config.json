@@ -5,23 +5,19 @@
   "color": "#D9D9D9",
   "ownerName": "Owner",
   "channels": [
-    "web",
-    "telegram"
+    "web"
   ],
-  "mode": "a2a",
+  "mode": "simulator",
   "env": {
     "url": "LIVIA_URL",
     "password": "LIVIA_PASSWORD"
   },
   "userId": "github:266114454",
-  "directUrl": "https://livia-pa.onrender.com",
   "github": {
     "repo": "giuerr/livia",
     "branch": "main",
     "files": [
-      "server.js",
-      "instructions.txt",
-      ".env.example"
+      "server.js"
     ]
   },
   "calibration": {
