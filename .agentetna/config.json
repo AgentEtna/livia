@@ -14,14 +14,16 @@
     "password": "LIVIA_PASSWORD"
   },
   "userId": "github:266114454",
+  "directUrl": "https://tabularum-api.onrender.com",
   "github": {
     "repo": "giuerr/livia",
     "branch": "main",
     "files": [
-      "server.js",
-      "instructions.txt",
-      ".env.example"
-    ]
+      "agents/clara/server.js",
+      "agents/clara/instructions.txt",
+      "agents/clara/.env.example"
+    ],
+    "folder": "agents/clara"
   },
   "calibration": {
     "purpose": "Executive Assistant",
