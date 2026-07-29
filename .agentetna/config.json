@@ -8,22 +8,21 @@
     "web",
     "telegram"
   ],
-  "mode": "simulator",
+  "mode": "a2a",
   "env": {
     "url": "LIVIA_URL",
     "password": "LIVIA_PASSWORD"
   },
   "userId": "github:266114454",
-  "directUrl": "https://tabularum-api.onrender.com",
+  "directUrl": "https://livia-pa.onrender.com",
   "github": {
     "repo": "giuerr/livia",
     "branch": "main",
     "files": [
-      "agents/clara/server.js",
-      "agents/clara/instructions.txt",
-      "agents/clara/.env.example"
-    ],
-    "folder": "agents/clara"
+      "server.js",
+      "instructions.txt",
+      ".env.example"
+    ]
   },
   "calibration": {
     "purpose": "Executive Assistant",
