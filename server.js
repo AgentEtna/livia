@@ -6,6 +6,8 @@ const Anthropic  = require("@anthropic-ai/sdk");
 const path = require("path");
 const fs   = require("fs");
 const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, LevelFormat, BorderStyle } = require("docx");
+const expenseReportEngine = require("./expense-reports");
+const { AGENT_CARD }      = require("./agent-card");
 
 // ─── Logging (declared early — used by OAuth setup and CRM cleanup) ──────────
 let logs = [];
@@ -394,6 +396,7 @@ const PROFILES_FILE           = path.join(DATA_DIR, "profiles.json");   // never
 const RULES_FILE              = path.join(DATA_DIR, "persistent_rules.json"); // never wiped
 const SCHEDULED_QUEUE_FILE    = path.join(DATA_DIR, "scheduled_queue.json");   // never wiped
 const EXPENSES_FILE           = path.join(DATA_DIR, "expenses.json");           // never wiped
+const EXPENSE_REPORTS_FILE    = path.join(DATA_DIR, "expense_reports.json");    // never wiped — trip claims
 const RSVP_FILE               = path.join(DATA_DIR, "rsvp_status.json");         // never wiped — tracks last-known attendee RSVP states
 const CRM_DELETED_FILE        = path.join(DATA_DIR, "crm_deleted.json");         // never wiped — manually deleted profiles
 const VAULT_DIR               = path.join(DATA_DIR, "vault");                    // file vault — attachments from Telegram/email
@@ -447,6 +450,7 @@ let profiles            = loadJSON(PROFILES_FILE, {}); // { "email": { ...CRM pr
 let persistentRules     = loadJSON(RULES_FILE, []);    // [{ rule, addedAt }] — instructions from ${OWNER_NAME}
 let scheduledQueue      = loadJSON(SCHEDULED_QUEUE_FILE, []); // [{ sendAt, to, subject, body, addedAt }]
 let expenses            = loadJSON(EXPENSES_FILE, []);
+let expenseReports      = loadJSON(EXPENSE_REPORTS_FILE, []); // [{ id, purpose, lineItems, status, ... }]
 let rsvpStatus          = loadJSON(RSVP_FILE, {}); // { "eventId": { "email": "accepted"|"declined"|"tentative"|"needsAction" } }
 let crmDeleted          = new Set(loadJSON(CRM_DELETED_FILE, [])); // emails manually removed — never re-create
 let vaultIndex          = loadJSON(VAULT_INDEX_FILE, []);          // [{ id, filename, mimeType, size, savedAt, source, caption }]
@@ -485,6 +489,7 @@ function saveProfiles() { if (_saveProfilesTimer) clearTimeout(_saveProfilesTime
 function saveRules()          { try { atomicWrite(RULES_FILE, JSON.stringify(persistentRules, null, 2)); } catch (e) { console.error(e.message); } }
 function saveScheduledQueue() { try { atomicWrite(SCHEDULED_QUEUE_FILE, JSON.stringify(scheduledQueue, null, 2)); } catch (e) { console.error(e.message); } }
 function saveExpenses()       { try { atomicWrite(EXPENSES_FILE, JSON.stringify(expenses, null, 2)); } catch (e) { console.error(e.message); } }
+function saveExpenseReports() { try { atomicWrite(EXPENSE_REPORTS_FILE, JSON.stringify(expenseReports, null, 2)); } catch (e) { console.error(e.message); } }
 function saveRsvpStatus()     { try { atomicWrite(RSVP_FILE, JSON.stringify(rsvpStatus, null, 2)); } catch (e) { console.error(e.message); } }
 function saveCrmDeleted()     { try { atomicWrite(CRM_DELETED_FILE, JSON.stringify([...crmDeleted])); } catch (e) { console.error(e.message); } }
 function saveVaultIndex()     { try { atomicWrite(VAULT_INDEX_FILE, JSON.stringify(vaultIndex, null, 2)); } catch (e) { console.error(e.message); } }
@@ -6255,6 +6260,117 @@ app.delete("/api/profiles/:email", apiLimiter, requireAuth, (req, res) => {
 // ── Persistent Rules ──────────────────────────────────────────────────────────
 // ── Expenses ─────────────────────────────────────────────────────────────────
 app.get("/api/expenses", apiLimiter, requireAuth, (req, res) => res.json(expenses));
+
+// ── Trip expense reports ─────────────────────────────────────────────────────
+// The register above records what arrived. These endpoints turn that spend into
+// a policy-checked, approvable claim. Namespaced under /api/expense-reports so
+// the register's own routes are untouched.
+
+/** Resolve a report by id, or answer 404. */
+function _findReport(req, res) {
+  const report = expenseReports.find(r => r.id === req.params.id);
+  if (!report) { res.status(404).json({ error: "Expense report not found" }); return null; }
+  return report;
+}
+
+/** Run an engine call, persist on success, and map thrown errors to 400. */
+function _mutateReport(res, report, fn) {
+  try {
+    const result = fn(report);
+    saveExpenseReports();
+    return res.json(result);
+  } catch (e) {
+    return res.status(400).json({ error: e.message });
+  }
+}
+
+app.get("/api/expense-reports", apiLimiter, requireAuth, (req, res) => {
+  res.json(expenseReports.map(r => ({ ...expenseReportEngine.summarise(r), status: r.status })));
+});
+
+app.post("/api/expense-reports", apiLimiter, requireAuth, (req, res) => {
+  try {
+    const { purpose, destination, startDate, endDate, traveler, policy } = req.body || {};
+    const report = expenseReportEngine.createReport(
+      { purpose, destination, startDate, endDate, traveler: traveler || OWNER_NAME },
+      policy || {},
+    );
+    expenseReports.push(report);
+    saveExpenseReports();
+    addLog(`\u{1F9FE} Expense report opened: ${report.purpose}`, "info");
+    res.json({ ok: true, report });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.get("/api/expense-reports/:id", apiLimiter, requireAuth, (req, res) => {
+  const report = _findReport(req, res);
+  if (!report) return;
+  res.json({
+    ok: true,
+    report,
+    summary: expenseReportEngine.summarise(report),
+    policy: expenseReportEngine.checkPolicy(report),
+  });
+});
+
+app.post("/api/expense-reports/:id/items", apiLimiter, requireAuth, (req, res) => {
+  const report = _findReport(req, res);
+  if (!report) return;
+  const b = req.body || {};
+  _mutateReport(res, report, (r) => {
+    const line = b.perDiem
+      ? expenseReportEngine.addPerDiem(r, { days: Number(b.days), kind: b.kind || "meals", date: b.date })
+      : expenseReportEngine.addLineItem(r, b);
+    return { ok: true, lineItem: line, total: expenseReportEngine.totalAmount(r) };
+  });
+});
+
+/** Claim an expense already captured in the register, without re-keying it. */
+app.post("/api/expense-reports/:id/claim/:expenseId", apiLimiter, requireAuth, (req, res) => {
+  const report = _findReport(req, res);
+  if (!report) return;
+  const captured = expenses.find(e => e.id === req.params.expenseId);
+  if (!captured) return res.status(404).json({ error: "Expense not found in the register" });
+
+  _mutateReport(res, report, (r) => {
+    const line = expenseReportEngine.fromCapturedExpense(r, captured);
+    addLog(`\u{1F9FE} Claimed ${captured.vendor} on report ${r.id}`, "info");
+    return { ok: true, lineItem: line, total: expenseReportEngine.totalAmount(r) };
+  });
+});
+
+app.post("/api/expense-reports/:id/submit", apiLimiter, requireAuth, (req, res) => {
+  const report = _findReport(req, res);
+  if (!report) return;
+  try {
+    const result = expenseReportEngine.submit(report, { submittedBy: (req.body || {}).submittedBy || OWNER_NAME });
+    saveExpenseReports();
+    res.status(result.ok ? 200 : 409).json(result);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.post("/api/expense-reports/:id/approve", apiLimiter, requireAuth, (req, res) => {
+  const report = _findReport(req, res);
+  if (!report) return;
+  const b = req.body || {};
+  _mutateReport(res, report, r => expenseReportEngine.approve(r, { approvedBy: b.approvedBy, notes: b.notes }));
+});
+
+app.post("/api/expense-reports/:id/reject", apiLimiter, requireAuth, (req, res) => {
+  const report = _findReport(req, res);
+  if (!report) return;
+  const b = req.body || {};
+  _mutateReport(res, report, r => expenseReportEngine.reject(r, { rejectedBy: b.rejectedBy, reason: b.reason }));
+});
+
+// ── Agent card ───────────────────────────────────────────────────────────────
+// Public and unauthenticated: it is an identity document, and it carries no
+// data beyond what Livia already advertises about herself.
+app.get("/agent-card", (req, res) => res.json(AGENT_CARD));
 
 // Manual expense entry
 app.post("/api/expenses", apiLimiter, requireAuth, (req, res) => {

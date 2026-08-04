@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node --max-old-space-size=460 server.js",
-    "check-env": "node -e \"const r=['ANTHROPIC_API_KEY','GOOGLE_CLIENT_ID','GOOGLE_CLIENT_SECRET','GOOGLE_REFRESH_TOKEN','OWNER_EMAILS','OWNER_EMAIL','OWNER_NAME','LIVIA_EMAIL'];const m=r.filter(k=>!process.env[k]);if(m.length){console.error('Missing env vars:',m.join(', '));process.exit(1);}console.log('All required env vars present.');\""
+    "check-env": "node -e \"const r=['ANTHROPIC_API_KEY','GOOGLE_CLIENT_ID','GOOGLE_CLIENT_SECRET','GOOGLE_REFRESH_TOKEN','OWNER_EMAILS','OWNER_EMAIL','OWNER_NAME','LIVIA_EMAIL'];const m=r.filter(k=>!process.env[k]);if(m.length){console.error('Missing env vars:',m.join(', '));process.exit(1);}console.log('All required env vars present.');\"",
+    "test": "node --test test/*.test.js"
   },
   "engines": {
     "node": ">=18.0.0"
