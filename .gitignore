@@ -11,6 +11,7 @@ profiles.json
 persistent_rules.json
 scheduled_queue.json
 expenses.json
+expense_reports.json
 rsvp_status.json
 crm_deleted.json
 vault_index.json
