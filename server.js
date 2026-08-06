@@ -98,7 +98,7 @@ const mind = createMind({
   logger:       (event, detail) => console.log(JSON.stringify({ _type: 'agent_core', event, ...detail })),
 });
 
-mountAgent(app, { mind, agentCard: () => AGENT_CARD, chatPaths: ['/chat', '/v1/chat/completions'] });
+mountAgent(app, { mind, agentCard: () => AGENT_CARD });
 
 const PUBLIC_DIR = path.join(__dirname, "public");
 // ── Security headers ───────────────────────────────────────────────────────
