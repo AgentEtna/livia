@@ -3,6 +3,7 @@ const express  = require("express");
 const cors     = require("cors");
 const { google } = require("googleapis");
 const Anthropic  = require("@anthropic-ai/sdk");
+const { createLLMClient, activeProvider } = require("./llm-client");
 const path = require("path");
 const fs   = require("fs");
 const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, LevelFormat, BorderStyle } = require("docx");
@@ -261,7 +262,11 @@ function loadInstructions() {
 }
 
 const config = {
-  anthropicKey:        setupVal("anthropicKey", "ANTHROPIC_API_KEY"),
+  // The LLM credential. Named anthropicKey because the setup wizard, the
+  // /api/config contract and setup.json all use that name; the value may now
+  // be an OpenRouter key. setup.json still wins, so a key entered in the
+  // wizard is not overridden by the environment.
+  anthropicKey:        setupVal("anthropicKey", "ANTHROPIC_API_KEY") || process.env.OPENROUTER_API_KEY || "",
   pollIntervalMinutes: parseInt(process.env.POLL_INTERVAL || "1"),
   isAuthorized:        !!GMAIL_REFRESH_TOKEN,
   _baseInstructions:   loadInstructions(),
@@ -372,11 +377,21 @@ calendarOAuth2Client.on("tokens", (tokens) => {
 const gmail    = google.gmail({ version: "v1", auth: oauth2Client });
 const calendar = google.calendar({ version: "v3", auth: calendarOAuth2Client });
 
-// ─── Anthropic singleton (rebuilt only when the API key changes) ──────────────
+// ─── LLM singleton (rebuilt only when the API key changes) ────────────────────
+//
+// Model traffic goes through OpenRouter when OPENROUTER_API_KEY is set, and to
+// Anthropic directly otherwise. The client speaks the Anthropic Messages shape
+// either way, so the call sites below are unchanged.
+//
+// The cached key is tracked separately rather than read back off the client:
+// the OpenRouter client exposes no .apiKey, so comparing against it would
+// rebuild on every call.
 let _anthropic = null;
+let _anthropicKey = null;
 function getAnthropic() {
-  if (!_anthropic || _anthropic.apiKey !== config.anthropicKey) {
-    _anthropic = new Anthropic({ apiKey: config.anthropicKey });
+  if (!_anthropic || _anthropicKey !== config.anthropicKey) {
+    _anthropic = createLLMClient({ apiKey: config.anthropicKey });
+    _anthropicKey = config.anthropicKey;
   }
   return _anthropic;
 }
@@ -1383,8 +1398,35 @@ async function askClaude(prompt, maxTokens = 1024, retries = 2, model = MODEL_CA
     }
   }
 }
+// web_search_20250305 is a server-side tool: Anthropic runs the search itself
+// and there is no equivalent in the OpenAI-compatible shape OpenRouter serves.
+// Forwarding it would produce a function tool nothing executes — the model
+// would "call" it, get no result, and answer from memory while still appearing
+// to have searched. So this one capability keeps a direct Anthropic client
+// whenever an Anthropic key is available, and degrades openly when it is not.
+let _searchClient = null;
+function getWebSearchClient() {
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (!key) return null;
+  if (!_searchClient) _searchClient = new Anthropic({ apiKey: key });
+  return _searchClient;
+}
+
 async function askClaudeWithWebSearch(prompt, { maxTokens = 4096, model = MODEL_CAPABLE } = {}) {
-  const res = await getAnthropic().messages.create({
+  const search = getWebSearchClient();
+
+  if (!search) {
+    // No Anthropic key: answer without live search rather than silently
+    // pretending to have searched. The prompt says so, so the model can
+    // caveat its answer instead of stating stale facts with confidence.
+    addLog("⚠️ Web search unavailable — no ANTHROPIC_API_KEY. Answering without live results.", "warning");
+    return askClaude(
+      `${prompt}\n\nNOTE: You have no web access for this request. Answer from what you already know and say plainly which parts you could not verify.`,
+      maxTokens, 2, model,
+    );
+  }
+
+  const res = await search.messages.create({
     model, max_tokens: maxTokens,
     system: INJECTION_GUARD_SYSTEM,
     tools: [{ type: "web_search_20250305", name: "web_search" }],
@@ -4787,7 +4829,7 @@ let isFetching = false; // prevents concurrent poll runs
 async function fetchNewEmails() {
   if (isFetching) { addLog("⏭️ Poll skipped — previous run still in progress", "info"); return; }
   if (!config.isAuthorized) { addLog("⚠️ Not authorized — visit /auth/login", "warning"); return; }
-  if (!config.anthropicKey) { addLog("⚠️ Anthropic API key missing", "warning"); return; }
+  if (!config.anthropicKey) { addLog("⚠️ LLM API key missing — set OPENROUTER_API_KEY", "warning"); return; }
   isFetching = true;
   try {
 
@@ -6927,6 +6969,6 @@ app.listen(PORT, () => {
     }
   } else {
     if (!config.isAuthorized) addLog("⚠️ Google not authorized — visit /auth/login", "warning");
-    if (!config.anthropicKey) addLog("⚠️ Anthropic API key missing", "warning");
+    if (!config.anthropicKey) addLog("⚠️ LLM API key missing — set OPENROUTER_API_KEY", "warning");
   }
 });
