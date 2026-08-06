@@ -6130,6 +6130,42 @@ app.delete("/api/threads/:threadId", apiLimiter, requireAuth, (req, res) => {
 });
 
 // Bulk-delete completed/cancelled threads
+// ─── Test harness endpoint (Agent Etna) ─────────────────────────────────────
+// Ported from livia_ea (2026-08-06) before that repo's retirement — the
+// endpoint and the Etna-generated guardrails were shipped there via Agent
+// Etna simulations and never followed the fork. The assistant's normal
+// interface is Telegram + email — no chat endpoint — so a developmental
+// simulator can't drive it. This exposes the brain (persona + askClaude)
+// over a simple {message} -> {reply} call SO IT CAN BE TESTED, but ONLY when
+// ETNA_AGENT_CHAT=1 is set (Agent Etna injects this in its sandbox). In
+// normal production the flag is unset and this 404s, so it never widens the
+// real attack surface or burns the key.
+app.post("/api/chat", apiLimiter, async (req, res) => {
+  const _etnaGuard = require("./etna-guardrails");
+  {
+    const _etnaGuardIn = _etnaGuard.checkInput(String((req && req.body && (req.body.message || req.body.text)) || ""));
+    if (_etnaGuardIn.blocked) { return res.status(403).json({ error: _etnaGuardIn.reason }); }
+  }
+  const _etnaOrigJson = res.json.bind(res);
+  res.json = (body) => {
+    const _etnaGuardOut = _etnaGuard.checkOutput(JSON.stringify(body || {}));
+    if (_etnaGuardOut.blocked) { return _etnaOrigJson({ error: _etnaGuardOut.reason }); }
+    return _etnaOrigJson(body);
+  };
+
+  if (process.env.ETNA_AGENT_CHAT !== "1") return res.status(404).json({ error: "Not found" });
+  const message = req.body && (req.body.message || req.body.text);
+  if (!message || typeof message !== "string") return res.status(400).json({ error: "message required" });
+  if (!config.anthropicKey) return res.status(503).json({ error: "AI unavailable — no LLM key configured." });
+  try {
+    const persona = String(config.instructions || "");
+    const prompt = `${persona}\n\nYou are ${LIVIA_NAME}, ${OWNER_NAME || "the owner"}'s executive assistant. Reply to the message below as you naturally would — concise and in your own voice.\n\nMessage:\n${wrapUntrusted(message.slice(0, 4000))}\n\nReply:`;
+    const reply = await askClaude(prompt, 600);
+    res.json({ reply: reply || "" });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 app.post("/api/threads/clear-done", apiLimiter, requireAuth, (req, res) => {
   let removed = 0;
   for (const [id, t] of Object.entries(activeThreads)) {
