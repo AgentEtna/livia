@@ -463,8 +463,27 @@ function createLLMClient(opts = {}) {
   }
 
   // Loaded lazily so a deployment running purely on OpenRouter never has to
-  // resolve the Anthropic SDK at all.
-  const Anthropic = require('@anthropic-ai/sdk');
+  // resolve the Anthropic SDK at all. Some agents that vendor this file do not
+  // depend on the SDK for exactly that reason, so a missing module here is a
+  // configuration problem to report, not a crash at an unrelated call site.
+  let Anthropic;
+  try {
+    Anthropic = require('@anthropic-ai/sdk');
+  } catch {
+    return {
+      provider: 'none',
+      messages: {
+        create: async () => {
+          throw apiError(
+            'ANTHROPIC_API_KEY is set but @anthropic-ai/sdk is not installed here. ' +
+            'Set OPENROUTER_API_KEY to use the OpenRouter gateway, which needs no SDK.',
+            500,
+          );
+        },
+      },
+    };
+  }
+
   const client = new Anthropic({ apiKey: key });
   client.provider = 'anthropic';
   return client;
