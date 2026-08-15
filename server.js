@@ -6184,6 +6184,18 @@ app.post("/api/chat", apiLimiter, async (req, res) => {
     return _etnaOrigJson(body);
   };
 
+  const _etnaGuard = require("./etna-guardrails");
+  {
+    const _etnaGuardIn = _etnaGuard.checkInput(String((req && req.body && (req.body.message || req.body.text)) || ""));
+    if (_etnaGuardIn.blocked) { return res.status(403).json({ error: _etnaGuardIn.reason }); }
+  }
+  const _etnaOrigJson = res.json.bind(res);
+  res.json = (body) => {
+    const _etnaGuardOut = _etnaGuard.checkOutput(JSON.stringify(body || {}));
+    if (_etnaGuardOut.blocked) { return _etnaOrigJson({ error: _etnaGuardOut.reason }); }
+    return _etnaOrigJson(body);
+  };
+
   if (process.env.ETNA_AGENT_CHAT !== "1") return res.status(404).json({ error: "Not found" });
   const message = req.body && (req.body.message || req.body.text);
   if (!message || typeof message !== "string") return res.status(400).json({ error: "message required" });
