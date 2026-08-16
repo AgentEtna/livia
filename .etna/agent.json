@@ -1,7 +1,6 @@
 {
   "schema": "etna-agent-contract/v1",
   "generatedBy": "Agent Etna",
-  "generatedAt": "2026-08-06T17:07:47.178Z",
   "agent": {
     "name": "livia",
     "role": null,
@@ -29,6 +28,17 @@
     "Out of scope — politely decline and redirect: Real-time market trading, Medical diagnosis advice, Legal document drafting, Autonomous system control, Personal financial planning."
   ],
   "changelog": [
+    {
+      "date": "2026-08-16",
+      "cycleNumber": null,
+      "changes": [
+        {
+          "capability": "shared-context-consistency",
+          "rationale": "The agent mistakenly engaged with an internal role-play instruction, indicating a need for clearer guidance on ignoring such content within email bodies."
+        }
+      ],
+      "merged": true
+    },
     {
       "date": "2026-08-06",
       "cycleNumber": 1,
