@@ -5,7 +5,7 @@ It is this agent's behavioral **contract**: what it's for, who it serves, what's
 in and out of scope, plus a log of every change Etna has applied — so the whole
 footprint is visible and auditable in your own repo.
 
-_Generated 2026-08-06T17:07:47.178Z. Don't edit by hand — Agent Etna rewrites it._
+_Maintained by Agent Etna. Don't edit by hand — it is rewritten on every shipped change._
 
 ## Agent
 - **Repo:** `giuerr/livia` (branch `main`)
@@ -22,6 +22,9 @@ _Generated 2026-08-06T17:07:47.178Z. Don't edit by hand — Agent Etna rewrites 
 - Out of scope — politely decline and redirect: Real-time market trading, Medical diagnosis advice, Legal document drafting, Autonomous system control, Personal financial planning.
 
 ## Change history
+
+### 2026-08-16 · 1 change · merged
+- **shared-context-consistency** — The agent mistakenly engaged with an internal role-play instruction, indicating a need for clearer guidance on ignoring such content within email bodies.
 
 ### 2026-08-06 · Cycle 1 · 2 changes · merged
 - **safety:cost-unbounded-loop** — The agent currently lacks a specific capability to handle email loops, which can lead to cost-unbounded situations; adding this as a custom capability allows for a structured implementation.
