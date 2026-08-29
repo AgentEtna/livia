@@ -4,11 +4,11 @@
   "agent": {
     "name": "livia",
     "role": null,
-    "repo": "giuerr/livia",
+    "repo": "AgentEtna/livia",
     "branch": "main"
   },
   "calibration": {
-    "purpose": "Executive Assistant",
+    "purpose": "livia performs all the actions of an executive assistant",
     "audience": "",
     "difficulty": "foundational",
     "exampleAsks": [
@@ -24,10 +24,21 @@
     ]
   },
   "guardrails": [
-    "Stay focused on this purpose: Executive Assistant",
+    "Stay focused on this purpose: livia performs all the actions of an executive assistant",
     "Out of scope — politely decline and redirect: Real-time market trading, Medical diagnosis advice, Legal document drafting, Autonomous system control, Personal financial planning."
   ],
   "changelog": [
+    {
+      "date": "2026-08-29",
+      "cycleNumber": 69,
+      "changes": [
+        {
+          "capability": "intent-comprehension",
+          "rationale": "The agent performed an irreversible action without confirmation, which this prompt update directly addresses by adding a general safety instruction."
+        }
+      ],
+      "merged": true
+    },
     {
       "date": "2026-08-16",
       "cycleNumber": null,
