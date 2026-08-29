@@ -15,13 +15,13 @@
   "authHeader": null,
   "github": {
     "repo": "AgentEtna/livia",
-    "branch": "main",
     "files": [
       "server.js"
-    ]
+    ],
+    "branch": "main"
   },
   "userId": "github:266114454",
-  "secretsUpdatedAt": 0,
+  "secretsUpdatedAt": 1787994494045,
   "instructions": null,
   "instructionsUpdatedAt": 0,
   "_envKeys": {
@@ -45,8 +45,25 @@
     "difficulty": "foundational"
   },
   "calibrationConfirmed": true,
-  "version": "1.0",
-  "versionHistory": [],
+  "version": "1.1",
+  "versionHistory": [
+    {
+      "at": "2026-08-29T09:12:29.864Z",
+      "prUrl": "https://github.com/AgentEtna/livia/pull/16",
+      "title": "The agent performed an irreversible action without confirmation, which this prompt update directly addresses by adding a general safety instruction.",
+      "origin": "simulation",
+      "changes": [
+        {
+          "growthId": "gr-5b7ad0a47efc",
+          "rationale": "The agent performed an irreversible action without confirmation, which this prompt update directly addresses by adding a general safety instruction.",
+          "capability": "intent-comprehension"
+        }
+      ],
+      "version": "1.1",
+      "prNumber": 16,
+      "cycleNumber": 69
+    }
+  ],
   "connectedAt": null,
   "env": {
     "url": "LIVIA_URL",
