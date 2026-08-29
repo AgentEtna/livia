@@ -1,25 +1,32 @@
 {
   "id": "livia",
   "name": "livia",
+  "role": "",
+  "color": "#E8899F",
+  "colorSlot": 5,
+  "ownerName": "Owner",
+  "url": "https://tabularum-livia.onrender.com",
+  "password": "",
   "channels": [
-    "web",
-    "telegram"
+    "web"
   ],
-  "mode": "a2a",
-  "env": {
-    "url": "LIVIA_URL",
-    "password": "LIVIA_PASSWORD"
-  },
-  "userId": "github:266114454",
-  "directUrl": "https://tabularum-livia.onrender.com",
+  "mode": "simulator",
+  "endpointPath": null,
+  "authHeader": null,
   "github": {
-    "repo": "giuerr/livia",
+    "repo": "AgentEtna/livia",
     "branch": "main",
     "files": [
-      "server.js",
-      "instructions.txt",
-      ".env.example"
+      "server.js"
     ]
+  },
+  "userId": "github:266114454",
+  "secretsUpdatedAt": 0,
+  "instructions": null,
+  "instructionsUpdatedAt": 0,
+  "_envKeys": {
+    "url": "LIVIA_URL",
+    "password": "LIVIA_PASSWORD"
   },
   "calibration": {
     "purpose": "Executive Assistant",
@@ -38,7 +45,11 @@
     "difficulty": "foundational"
   },
   "calibrationConfirmed": true,
-  "role": "",
-  "color": "#D9D9D9",
-  "ownerName": "Owner"
+  "version": "1.0",
+  "versionHistory": [],
+  "connectedAt": null,
+  "env": {
+    "url": "LIVIA_URL",
+    "password": "LIVIA_PASSWORD"
+  }
 }
