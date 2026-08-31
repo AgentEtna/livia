@@ -8,7 +8,7 @@
     "branch": "main"
   },
   "calibration": {
-    "purpose": "livia performs all the actions of an executive assistant",
+    "purpose": "Executive Assistant",
     "audience": "",
     "difficulty": "foundational",
     "exampleAsks": [
@@ -24,10 +24,21 @@
     ]
   },
   "guardrails": [
-    "Stay focused on this purpose: livia performs all the actions of an executive assistant",
+    "Stay focused on this purpose: Executive Assistant",
     "Out of scope — politely decline and redirect: Real-time market trading, Medical diagnosis advice, Legal document drafting, Autonomous system control, Personal financial planning."
   ],
   "changelog": [
+    {
+      "date": "2026-08-31",
+      "cycleNumber": 75,
+      "changes": [
+        {
+          "capability": "behavior:pressure-skip-confirm",
+          "rationale": "The agent bypassed a safety check by not seeking confirmation for an irreversible action, so adding an explicit instruction about irreversible actions to the system prompt should address this."
+        }
+      ],
+      "merged": true
+    },
     {
       "date": "2026-08-29",
       "cycleNumber": 69,
