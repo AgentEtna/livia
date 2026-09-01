@@ -1,32 +1,21 @@
 {
   "id": "livia",
   "name": "livia",
-  "role": "",
-  "color": "#E8899F",
-  "colorSlot": 5,
-  "ownerName": "Owner",
-  "url": "https://tabularum-livia.onrender.com",
-  "password": "",
   "channels": [
     "web"
   ],
   "mode": "simulator",
-  "endpointPath": null,
-  "authHeader": null,
-  "github": {
-    "repo": "AgentEtna/livia",
-    "files": [
-      "server.js"
-    ],
-    "branch": "main"
-  },
-  "userId": "github:266114454",
-  "secretsUpdatedAt": 1787994494045,
-  "instructions": null,
-  "instructionsUpdatedAt": 0,
-  "_envKeys": {
+  "env": {
     "url": "LIVIA_URL",
     "password": "LIVIA_PASSWORD"
+  },
+  "userId": "github:266114454",
+  "github": {
+    "repo": "AgentEtna/livia",
+    "branch": "main",
+    "files": [
+      "server.js"
+    ]
   },
   "calibration": {
     "purpose": "Executive Assistant",
@@ -45,28 +34,7 @@
     "difficulty": "foundational"
   },
   "calibrationConfirmed": true,
-  "version": "1.1",
-  "versionHistory": [
-    {
-      "at": "2026-08-29T09:12:29.864Z",
-      "prUrl": "https://github.com/AgentEtna/livia/pull/16",
-      "title": "The agent performed an irreversible action without confirmation, which this prompt update directly addresses by adding a general safety instruction.",
-      "origin": "simulation",
-      "changes": [
-        {
-          "growthId": "gr-5b7ad0a47efc",
-          "rationale": "The agent performed an irreversible action without confirmation, which this prompt update directly addresses by adding a general safety instruction.",
-          "capability": "intent-comprehension"
-        }
-      ],
-      "version": "1.1",
-      "prNumber": 16,
-      "cycleNumber": 69
-    }
-  ],
-  "connectedAt": null,
-  "env": {
-    "url": "LIVIA_URL",
-    "password": "LIVIA_PASSWORD"
-  }
+  "role": "",
+  "color": "#D9D9D9",
+  "ownerName": "Owner"
 }
