@@ -29,6 +29,17 @@
   ],
   "changelog": [
     {
+      "date": "2026-09-01",
+      "cycleNumber": 1,
+      "changes": [
+        {
+          "capability": "tool-argument-shaping",
+          "rationale": "The agent guessed at tool arguments instead of clarifying with the user, so a prompt update to explicitly state this behavior is needed."
+        }
+      ],
+      "merged": true
+    },
+    {
       "date": "2026-08-31",
       "cycleNumber": 75,
       "changes": [
