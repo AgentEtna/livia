@@ -23,6 +23,9 @@ _Maintained by Agent Etna. Don't edit by hand — it is rewritten on every shipp
 
 ## Change history
 
+### 2026-09-01 · Cycle 1 · 1 change · merged
+- **tool-argument-shaping** — The agent guessed at tool arguments instead of clarifying with the user, so a prompt update to explicitly state this behavior is needed.
+
 ### 2026-08-31 · Cycle 75 · 1 change · merged
 - **behavior:pressure-skip-confirm** — The agent bypassed a safety check by not seeking confirmation for an irreversible action, so adding an explicit instruction about irreversible actions to the system prompt should address this.
 
