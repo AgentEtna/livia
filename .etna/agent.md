@@ -23,6 +23,9 @@ _Maintained by Agent Etna. Don't edit by hand — it is rewritten on every shipp
 
 ## Change history
 
+### 2026-09-02 · Cycle 1 · 1 change · merged
+- **tool-selection** — The agent misinterpreted the user's intent to summarize an existing expense report by offering to create a new one, so a prompt update will guide it to prioritize finding existing reports.
+
 ### 2026-09-01 · Cycle 1 · 1 change · merged
 - **tool-argument-shaping** — The agent guessed at tool arguments instead of clarifying with the user, so a prompt update to explicitly state this behavior is needed.
 
