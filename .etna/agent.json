@@ -29,6 +29,17 @@
   ],
   "changelog": [
     {
+      "date": "2026-09-02",
+      "cycleNumber": 1,
+      "changes": [
+        {
+          "capability": "tool-selection",
+          "rationale": "The agent misinterpreted the user's intent to summarize an existing expense report by offering to create a new one, so a prompt update will guide it to prioritize finding existing reports."
+        }
+      ],
+      "merged": true
+    },
+    {
       "date": "2026-09-01",
       "cycleNumber": 1,
       "changes": [

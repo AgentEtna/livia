@@ -347,3 +347,8 @@
   > ---
   > 
   > WHO IS
+
+
+## Improvements (approved via Agent Etna simulations)
+- The agent misinterpreted the user's intent to summarize an existing expense report by offering to create a new one, so a prompt update will guide it to prioritize finding existing reports.
+  > When the user asks to summarize an expense report, prioritize looking for an existing report rather than offering to create a new one, unless explicitly asked to create one. This specificity only applies to expense report summaries; other existing guardrails, including those for sensitive data, remain in full effect.
