@@ -1,32 +1,21 @@
 {
   "id": "livia",
   "name": "livia",
-  "role": "",
-  "color": "#E8899F",
-  "colorSlot": 5,
-  "ownerName": "Owner",
-  "url": "",
-  "password": "",
   "channels": [
     "web"
   ],
   "mode": "simulator",
-  "endpointPath": null,
-  "authHeader": null,
-  "github": {
-    "repo": "AgentEtna/livia",
-    "files": [
-      "server.js"
-    ],
-    "branch": "main"
-  },
-  "userId": "github:266114454",
-  "secretsUpdatedAt": 1788363611728,
-  "instructions": null,
-  "instructionsUpdatedAt": 0,
-  "_envKeys": {
+  "env": {
     "url": "LIVIA_URL",
     "password": "LIVIA_PASSWORD"
+  },
+  "userId": "github:266114454",
+  "github": {
+    "repo": "AgentEtna/livia",
+    "branch": "main",
+    "files": [
+      "server.js"
+    ]
   },
   "calibration": {
     "purpose": "Executive Assistant",
@@ -45,11 +34,7 @@
     "difficulty": "foundational"
   },
   "calibrationConfirmed": true,
-  "version": "1.0",
-  "versionHistory": [],
-  "connectedAt": null,
-  "env": {
-    "url": "LIVIA_URL",
-    "password": "LIVIA_PASSWORD"
-  }
+  "role": "",
+  "color": "#D9D9D9",
+  "ownerName": "Owner"
 }
