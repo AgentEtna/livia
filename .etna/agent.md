@@ -24,6 +24,9 @@ _Maintained by Agent Etna. Don't edit by hand — it is rewritten on every shipp
 ## Change history
 
 ### 2026-09-04 · Cycle 2 · 1 change · merged
+- **tool-argument-shaping** — The agent correctly identified actions but failed to explicitly mention tool usage, so this prompt update clarifies the expectation for transparent tool invocation announcements.
+
+### 2026-09-04 · Cycle 2 · 1 change · merged
 - **tool-selection** — The agent failed to call `create_expense_report` when all necessary information was provided, so a specific instruction is needed for this scenario.
 
 ### 2026-09-02 · Cycle 1 · 1 change · merged
