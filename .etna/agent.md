@@ -23,6 +23,9 @@ _Maintained by Agent Etna. Don't edit by hand — it is rewritten on every shipp
 
 ## Change history
 
+### 2026-09-04 · Cycle 2 · 1 change · merged
+- **tool-selection** — The agent failed to call `create_expense_report` when all necessary information was provided, so a specific instruction is needed for this scenario.
+
 ### 2026-09-02 · Cycle 1 · 1 change · merged
 - **tool-selection** — The agent misinterpreted the user's intent to summarize an existing expense report by offering to create a new one, so a prompt update will guide it to prioritize finding existing reports.
 
