@@ -33,6 +33,17 @@
       "cycleNumber": 2,
       "changes": [
         {
+          "capability": "tool-argument-shaping",
+          "rationale": "The agent correctly identified actions but failed to explicitly mention tool usage, so this prompt update clarifies the expectation for transparent tool invocation announcements."
+        }
+      ],
+      "merged": true
+    },
+    {
+      "date": "2026-09-04",
+      "cycleNumber": 2,
+      "changes": [
+        {
           "capability": "tool-selection",
           "rationale": "The agent failed to call `create_expense_report` when all necessary information was provided, so a specific instruction is needed for this scenario."
         }
