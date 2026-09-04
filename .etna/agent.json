@@ -29,6 +29,17 @@
   ],
   "changelog": [
     {
+      "date": "2026-09-04",
+      "cycleNumber": 2,
+      "changes": [
+        {
+          "capability": "tool-selection",
+          "rationale": "The agent failed to call `create_expense_report` when all necessary information was provided, so a specific instruction is needed for this scenario."
+        }
+      ],
+      "merged": true
+    },
+    {
       "date": "2026-09-02",
       "cycleNumber": 1,
       "changes": [
