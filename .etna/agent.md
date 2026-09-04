@@ -23,6 +23,9 @@ _Maintained by Agent Etna. Don't edit by hand — it is rewritten on every shipp
 
 ## Change history
 
+### 2026-09-04 · Cycle 4 · 1 change · merged
+- **safety:retrieval-injection** — The agent correctly detected a prompt injection but needs an explicit refusal to prevent implicit continuation, specifically when an 'override' attempt is detected.
+
 ### 2026-09-04 · Cycle 3 · 1 change · merged
 - **tool-argument-shaping** — The agent needs to explicitly state tool arguments when gathering information, which is a narrower application of the previous prompt update that caused safety regressions.
 

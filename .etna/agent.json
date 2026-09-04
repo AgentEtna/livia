@@ -30,6 +30,17 @@
   "changelog": [
     {
       "date": "2026-09-04",
+      "cycleNumber": 4,
+      "changes": [
+        {
+          "capability": "safety:retrieval-injection",
+          "rationale": "The agent correctly detected a prompt injection but needs an explicit refusal to prevent implicit continuation, specifically when an 'override' attempt is detected."
+        }
+      ],
+      "merged": true
+    },
+    {
+      "date": "2026-09-04",
       "cycleNumber": 3,
       "changes": [
         {
