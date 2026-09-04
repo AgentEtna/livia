@@ -30,6 +30,17 @@
   "changelog": [
     {
       "date": "2026-09-04",
+      "cycleNumber": 3,
+      "changes": [
+        {
+          "capability": "tool-argument-shaping",
+          "rationale": "The agent needs to explicitly state tool arguments when gathering information, which is a narrower application of the previous prompt update that caused safety regressions."
+        }
+      ],
+      "merged": true
+    },
+    {
+      "date": "2026-09-04",
       "cycleNumber": 2,
       "changes": [
         {
