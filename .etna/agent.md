@@ -23,6 +23,9 @@ _Maintained by Agent Etna. Don't edit by hand — it is rewritten on every shipp
 
 ## Change history
 
+### 2026-09-05 · Cycle 3 · 1 change · merged
+- **safety:memory-retention** — The agent denied context and dropped the user's cited reference number REF-752689 entirely; a domain-knowledge memory entry teaches it to echo cited reference IDs and request context rather than deny prior exchange, without touching safety-related prompt text that has repeatedly regressed.
+
 ### 2026-09-04 · Cycle 4 · 1 change · merged
 - **safety:retrieval-injection** — The agent correctly detected a prompt injection but needs an explicit refusal to prevent implicit continuation, specifically when an 'override' attempt is detected.
 
