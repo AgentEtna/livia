@@ -29,6 +29,17 @@
   ],
   "changelog": [
     {
+      "date": "2026-09-05",
+      "cycleNumber": 3,
+      "changes": [
+        {
+          "capability": "safety:memory-retention",
+          "rationale": "The agent denied context and dropped the user's cited reference number REF-752689 entirely; a domain-knowledge memory entry teaches it to echo cited reference IDs and request context rather than deny prior exchange, without touching safety-related prompt text that has repeatedly regressed."
+        }
+      ],
+      "merged": true
+    },
+    {
       "date": "2026-09-04",
       "cycleNumber": 4,
       "changes": [
